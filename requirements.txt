@@ -1,0 +1,9 @@
+# python -m venv c:/virtualenvs/ocr-endpoint-venv
+# pip install torch torchvision  --index-url https://download.pytorch.org/whl/cu118
+# pip install -r requirements.txt --upgrade
+fastapi[all]
+pytest
+
+easyocr
+Pillow
+numpy
