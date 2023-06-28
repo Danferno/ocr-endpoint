@@ -3,8 +3,6 @@ from fastapi import FastAPI, Response, UploadFile
 from pydantic import BaseModel
 import easyocr
 import numpy as np
-import cv2 as cv
-import json
 import io
 import pickle
 from datetime import datetime
