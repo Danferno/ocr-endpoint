@@ -7,6 +7,7 @@ import numpy as np
 import io
 import pickle
 from datetime import datetime
+from uuid import uuid4
 
 from torch.cuda import OutOfMemoryError as TorchOutOfMemoryError
 
@@ -24,7 +25,8 @@ async def root():
 
 @app.post('/easyocr')
 async def ocr_easyocr(img_array_pkl: UploadFile):
-    print(datetime.now(), 'Request arrived')
+    request_id = str(uuid4())[:13]
+    print(datetime.now(), f'{request_id}: Request arrived')
     img_array = np.array(pickle.loads(await img_array_pkl.read()), dtype=np.uint8)
     try:
         text = reader.readtext(image=img_array, batch_size=60, detail=1)
@@ -48,6 +50,7 @@ async def ocr_easyocr(img_array_pkl: UploadFile):
         pickle.dump(text, buffer)
         text_bytes = buffer.getvalue()
 
+    print(datetime.now(), f'{request_id}: Response dispatched')
     return Response(text_bytes)
 
 if __name__ == '__main__':
